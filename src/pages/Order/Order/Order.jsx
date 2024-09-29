@@ -1,54 +1,56 @@
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import orderCoverImg from '../../../assets/shop/order.jpg';
 import Cover from '../../Shared/Cover/Cover';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import useMenu from '../../../hook/useMenu';
+
 import OrderTab from '../OrderTab/OrderTab';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { useMenu } from '../../Menu/MenuContext/MenuContext';
 
 const Order = () => {
-      const categories = ['salad', 'pizza', 'soup', 'dessert', 'drinks'];
-      const{ category} = useParams();
-      const initialIndex = categories.indexOf(category);
-      const [tabIndex, setTabIndex] = useState(initialIndex);
-      const [menu] = useMenu();
+    const categories = ['salad', 'pizza', 'soup', 'dessert', 'drinks'];
+    const { category } = useParams();
+    const initialIndex = category ? categories.indexOf(category) : 0;
+    const [tabIndex, setTabIndex] = useState(initialIndex);
+    const { state: { menu, loading } } = useMenu();
 
-    const dessert = menu.filter(item => item.category === "dessert");
-    const soup = menu.filter(item => item.category === "soup");
-    const salad = menu.filter(item => item.category === "salad");
-    const pizza = menu.filter(item => item.category === "pizza");
-    const drinks = menu.filter(item => item.category === "offered");
-    
+    const categorizedMenu = useMemo(() => {
+        return {
+            salad: menu.filter(item => item.category === "salad"),
+            pizza: menu.filter(item => item.category === "pizza"),
+            soup: menu.filter(item => item.category === "soup"),
+            dessert: menu.filter(item => item.category === "dessert"),
+            drinks: menu.filter(item => item.category === "drinks")
+        };
+    }, [menu]);
+
+    useEffect(() => {
+        // Scroll to the desired position when the component mounts or category changes
+        window.scrollTo({ top: 500, behavior: 'smooth' });
+    }, [category]);
+
+    if (loading) {
+        return <div>Loading...</div>; // Or a more sophisticated loading indicator
+    }
+
     return (
         <div>
-            <Cover img={orderCoverImg} title={"Our Order"}></Cover>
+            <Helmet>
+                <title>Bistro Boss | Order Food</title>
+            </Helmet>
+            <Cover img={orderCoverImg} title="Our Order" />
             <Tabs defaultIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-  <TabList>
-    <Tab>Salad</Tab>
-    <Tab>Pizza</Tab>
-    <Tab>Soup</Tab>
-    <Tab>Dessert</Tab>
-    <Tab>Drinks</Tab>
-  </TabList>
-  <TabPanel>
-        <OrderTab items={salad}></OrderTab>
-  </TabPanel>
-  <TabPanel>
-        <OrderTab items={pizza}></OrderTab>
-  </TabPanel>
-  <TabPanel>
-        <OrderTab items={soup}></OrderTab>
-  </TabPanel>
-  <TabPanel>
-        <OrderTab items={dessert}></OrderTab>
-  </TabPanel>
-  <TabPanel>
-        <OrderTab items={drinks}></OrderTab>
-  </TabPanel>
- 
-  
-</Tabs>
+                <TabList>
+                    {categories.map(cat => <Tab key={cat}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</Tab>)}
+                </TabList>
+                {categories.map(cat => (
+                    <TabPanel key={cat}>
+                        <OrderTab items={categorizedMenu[cat] || []} />
+                    </TabPanel>
+                ))}
+            </Tabs>
         </div>
     );
 };

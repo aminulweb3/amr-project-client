@@ -8,6 +8,7 @@ import saladImg from '../../../assets/menu/salad-bg.jpg';
 import useMenu from "../../../hook/useMenu";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import MenuCategory from "../MenuCategory/MenuCategory";
+
 const Menu = () => {
     const [menu] = useMenu();
     const dessert = menu.filter(item => item.category === "dessert")
@@ -21,13 +22,13 @@ const Menu = () => {
             <Helmet>
                 <title>Bistro Boss | Menu</title>
             </Helmet>
-       <Cover img={menuImg} title="Our Menu"></Cover>
+     <Cover img={menuImg} title={"Our Menu"}></Cover>
         <SectionTitle
-        subHeading={"Our Menu"}
-        heading={"Don't Miss"}
+        subHeading={"Don't Miss"}
+        heading={"TODAY'S OFFER"}
         
         ></SectionTitle>
-        <MenuCategory items={offered}></MenuCategory>
+        <MenuCategory items={offered}  ></MenuCategory>
         <MenuCategory items={dessert} title={"dessert"} img={desserImg}></MenuCategory>
         <MenuCategory items={soup} title={"soup"} img={soupImg}></MenuCategory>
         <MenuCategory items={pizza} title={"pizza"} img={pizzaImg}></MenuCategory>

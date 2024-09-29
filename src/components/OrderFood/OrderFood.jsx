@@ -11,7 +11,7 @@ const OrderFood = ({item}) => {
     const navigate = useNavigate();
     const location = useLocation(); 
     const axiosSecure = useAxiosSecure();
-    const [, refetch] = useCart();
+    const [refetch] = useCart();
     const handleAddToCart = () => {
       if(user && user.email){
       //  TODO: send cart item to the database
@@ -25,21 +25,21 @@ const OrderFood = ({item}) => {
         price,
         image
       }
-      axiosSecure.post('/carts', cartItem)
-       .then(res => {
-        console.log(res.data)
-        if(res.data.insertedId){
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: `${name} added to your cart`,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          // refetch cart to update the cart items count
-          refetch();
-        }
-       })
+      // axiosSecure.post('/carts', cartItem)
+      //  .then(res => {
+      //   console.log(res.data)
+      //   if(res.data.insertedId){
+      //     Swal.fire({
+      //       position: "top-end",
+      //       icon: "success",
+      //       title: `${name} added to your cart`,
+      //       showConfirmButton: false,
+      //       timer: 1500
+      //     });
+      //     // refetch cart to update the cart items count
+      //     refetch();
+      //   }
+      //  })
    
       }
       else{

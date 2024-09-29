@@ -1,25 +1,26 @@
-import featuredImg from '../../../assets/home/featured.jpg';
 import SectionTitle from '../../../components/SectionTitle/SectionTitle';
+import featuredImg from '../../../assets/home/featured.jpg';
 import './Featured.css'
+
 const Featured = () => {
     return (
-       <div className='featured-item text-white pt-8 my-20'>
-        <SectionTitle
-        subHeading={"Check it out"}
-        heading={"From our Menu"}
-        ></SectionTitle>
-         <div className='flex  justify-center bg-slate-500  bg-opacity-40 items-center pb-20 pt-12 px-36'>
-            <div>
-                <img src={featuredImg} alt="" />
-            </div>
-            <div className='md:ml-10'>
-                <h2 className=''>Aug20, 2028</h2>
-                <h1 className='uppercase '>Whare can i get some?</h1>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Expedita illo nostrum minima, sunt repellendus similique inventore reprehenderit asperiores qui eligendi quis tenetur quia placeat minus possimus velit perspiciatis voluptas modi at quasi voluptatum voluptates repellat optio. Blanditiis consectetur laborum dignissimos, excepturi beatae incidunt ullam aperiam soluta tempora iusto, numquam repellendus.</p>
-                <button className='btn btn-outline border-0 border-b-4 text-white'>Order Now</button>
+        <div className='featured-item bg-fixed text-white pt-8 my-20'>
+            <SectionTitle
+                subHeading="Check it out"
+                heading="Featured Item"
+            />
+            <div className='md:flex justify-center items-center bg-slate-500 bg-opacity-60 pb-20 pt-12 px-36'>
+                <div>
+                    <img src={featuredImg} alt="Featured" />
+                </div>
+                <div className='md:ml-10'>
+                    <p >Aug 20, 2029</p>
+                    <p className='uppercase'>Where can i get some?</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate expedita hic dolorem, iusto vel suscipit nam excepturi debitis magnam nostrum! Ut eum dignissimos culpa doloremque eligendi consectetur blanditiis laboriosam fugiat ea quia similique quam nisi reprehenderit numquam magnam nemo vitae cupiditate, atque maiores dicta minus pariatur. Perspiciatis nobis vero quas?</p>
+                    <button className='btn btn-outline border-0 border-b-4 mt-4 bg-slate-800 text-white'>Order Now</button>
+                </div>
             </div>
         </div>
-       </div>
     );
 };
 
