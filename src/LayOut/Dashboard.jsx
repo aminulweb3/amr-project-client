@@ -8,7 +8,8 @@ const Dashboard = () => {
     const [cart] = useCart();
     const [cartLength, setCartLength] = useState(0);
     // TODO: get isAdmin value from database
-      const [isAdmin] = useAdmin();
+    //   const [isAdmin] = useAdmin();
+    const isAdmin = true;
 
     useEffect(() => {
         if (cart) {
@@ -22,7 +23,7 @@ const Dashboard = () => {
             <div className="w-64 min-h-screen bg-orange-400 text-black">
                 <ul className="menu p-4">
                   {
-                   isAdmin === true ? <>
+                    isAdmin === true ? <>
                       <li>
                         <NavLink to="/dashboard/adminHome">
                         <FaHome></FaHome>
@@ -63,7 +64,7 @@ const Dashboard = () => {
                     <li>
                         <NavLink to="/dashboard/cart">
                         <FaShoppingCart></FaShoppingCart>
-                         My Cart ({cartLength}) </ NavLink>
+                         My Cart ({cartLength}) </NavLink>
                     </li>
                     <li>
                         <NavLink to="/dashboard/review">

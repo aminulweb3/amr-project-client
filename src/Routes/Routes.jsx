@@ -58,7 +58,7 @@ import AdminRoute from "./AdminRoutes";
         // admin routes
         {
           path: 'users',
-          element:  <AdminRoute><AllUsers></AllUsers></AdminRoute>
+          element:  <AllUsers></AllUsers>
   
         },
 
