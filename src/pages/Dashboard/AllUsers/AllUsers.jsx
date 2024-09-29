@@ -4,29 +4,32 @@ import { FaTrashAlt, FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const AllUsers = () => {
-    // Custom Axios hook for secure API requests
+
     const axiosSecure = useAxiosSecure();
 
-    // Fetch users with react-query. The queryKey is ['users'] and the queryFn is fetching the users data from the secure API endpoint.
-    const { data: users = [], refetch } = useQuery({
+  
+    const { data: users = [], refetch, isLoading } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await axiosSecure.get('/users');
+            console.log('Response from /users:', res.data);
             return res.data;
         }
     });
+    
 
-    // Function to make a user an admin. Sends a PATCH request to the backend with the user's ID.
+
+    
     const handleMakeAdmin = user => {
-        axiosSecure.patch(`/users/admin/${user._id}`)  // PATCH request to update the user's role to 'admin'
+        axiosSecure.patch(`/users/admin/${user._id}`)  
         .then(res => {
             console.log(res.data);
-            if(res.data.modifiedCount > 0) {  // If the user's role was successfully updated
-                refetch();  // Refetch the users to update the list
+            if(res.data.modifiedCount > 0) {  // 
+                refetch();  
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: `${user.name} is an admin now!`,  // Show success notification
+                    title: `${user.name} is an admin now!`, 
                     showConfirmButton: false,
                     timer: 1500
                 });
@@ -34,23 +37,23 @@ const AllUsers = () => {
         });
     };
 
-    // Function to delete a user. Opens a confirmation dialog using SweetAlert before sending a DELETE request.
+   
     const handleDeleteUser = user => {
         Swal.fire({
-            title: "Are you sure?",  // Confirmation message
+            title: "Are you sure?",  // 
             text: "You won't be able to revert this!",
             icon: "warning",
-            showCancelButton: true,  // Show the cancel button in case the user changes their mind
+            showCancelButton: true, 
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"  // Confirmation button text
         }).then((result) => {
             if (result.isConfirmed) {
-                // Proceed with the deletion if the user confirms
-                axiosSecure.delete(`/users/${user._id}`)  // DELETE request to remove the user
+              
+                axiosSecure.delete(`/users/${user._id}`)  
                 .then(res => {
-                    if (res.data.deletedCount > 0) {  // If the user was successfully deleted
-                        refetch();  // Refetch the users to update the list
+                    if (res.data.deletedCount > 0) {  
+                        refetch();
                         Swal.fire({
                             title: "Deleted!",
                             text: "The user has been deleted.",

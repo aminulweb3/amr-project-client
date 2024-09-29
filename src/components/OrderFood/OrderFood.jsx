@@ -11,56 +11,57 @@ const OrderFood = ({item}) => {
     const navigate = useNavigate();
     const location = useLocation(); 
     const axiosSecure = useAxiosSecure();
-    const [refetch] = useCart();
+    const [,refetch] = useCart();
     const handleAddToCart = () => {
+
       if(user && user.email){
-      //  TODO: send cart item to the database
-      // console.log(user.email, food);
-      // send cart item to the database
-
-      const cartItem = {
-        menuId: _id,
-        email: user.email,
-        name,
-        price,
-        image
-      }
-      // axiosSecure.post('/carts', cartItem)
-      //  .then(res => {
-      //   console.log(res.data)
-      //   if(res.data.insertedId){
-      //     Swal.fire({
-      //       position: "top-end",
-      //       icon: "success",
-      //       title: `${name} added to your cart`,
-      //       showConfirmButton: false,
-      //       timer: 1500
-      //     });
-      //     // refetch cart to update the cart items count
-      //     refetch();
-      //   }
-      //  })
-   
-      }
-      else{
-        Swal.fire({
-          title: "You are not lgged In",
-          text: "Please login to add to the cart?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, login!"
-        }).then((result) => {
-          if (result.isConfirmed) {
-          // send the user to the login page
-          navigate('/login', {state: {from: location}})
-
-         
-          }
-        });
-      }
+        //  TODO: send cart item to the database
+        // console.log(user.email, food);
+        // send cart item to the database
+  
+        const cartItem = {
+          menuId: _id,
+          email: user.email,
+          name,
+          price,
+          image
+        }
+        axiosSecure.post('/carts', cartItem)
+         .then(res => {
+          console.log(res.data)
+          if(res.data.insertedId){
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: `${name} added to your cart`,
+              showConfirmButton: false,
+              timer: 1500
+            });}
+          //   // refetch cart to update the cart items count
+            refetch();
+          // }
+         })
+     
     }
+    else{
+      Swal.fire({
+        title: "You are not lgged In",
+        text: "Please login to add to the cart?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, login!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+        // send the user to the login page
+        navigate('/login', {state: {from: location}})
+
+       
+        }
+      })}
+  
+  }
     return (
         <div className="card bg-base-100 w-96 shadow-xl">
         <figure className="px-10 pt-10">
@@ -82,3 +83,7 @@ const OrderFood = ({item}) => {
 };
 
 export default OrderFood;
+
+
+
+

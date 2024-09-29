@@ -19,7 +19,7 @@ const PopularMenu = () => {
     //     })
     // }, [])
 
-    console.log(popular)
+    // console.log(popular)
     return (
 
 
